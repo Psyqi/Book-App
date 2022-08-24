@@ -1,4 +1,4 @@
-package com.fathi.mybook
+package com.fathi.recyclerview
 
 import android.content.Context
 import android.content.Intent
@@ -28,22 +28,38 @@ class CardViewBookAdapter(private val listBooks: ArrayList<Book>, val context: C
             val DetailName: String = getData.title
             val DetailDesc: String = getData.detail
             val DetailPhoto: Int = getData.psd
+            val DetailSum: String = getData.summary
+            val DetailWriter : String = getData.write
+            val DetailImages : Int = getData.image
+            val DetailCreator : String = getData.create
 
             val moveToDetail = Intent(context,DetailActivity::class.java)
-            moveToDetail.putExtra("bName", "DetailName")
-            moveToDetail.putExtra("bDetail", "DetailDesc")
-            moveToDetail.putExtra("bPhoto", "DetailPhoto")
+            moveToDetail.putExtra("bName", DetailName)
+            moveToDetail.putExtra("bDetail", DetailDesc)
+            moveToDetail.putExtra("bPhoto", DetailPhoto)
+            moveToDetail.putExtra("bSum", DetailSum)
+            moveToDetail.putExtra("bWrite", DetailWriter)
+            moveToDetail.putExtra("bCreate", DetailCreator)
+            moveToDetail.putExtra("bImages", DetailImages)
             context.startActivity(moveToDetail)
         }
 
         Glide.with(holder.itemView.context)
             .load(book.psd)
-            .apply(RequestOptions().override(55, 55))
+            .apply(RequestOptions().override(3750, 3750))
             .into(holder.coupleBook)
         holder.fathiAnnaqi.text = book.title
         holder.annisaSakinah.text = book.detail
 
+        holder.btnFavorite.setOnClickListener {
+            Toast.makeText(holder.itemView.context, "Success Add " + listBooks[position].title + " Book to Favorite", Toast.LENGTH_SHORT).show()
+        }
+
+
+
     }
+
+
 
     override fun getItemCount(): Int {
         return listBooks.size
@@ -51,14 +67,13 @@ class CardViewBookAdapter(private val listBooks: ArrayList<Book>, val context: C
 
     inner class CardViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var coupleBook: ImageView = itemView.findViewById(R.id.photo_book)
-        var fathiAnnaqi: TextView = itemView.findViewById(R.id.book_title)
-        var annisaSakinah: TextView = itemView.findViewById(R.id.book_detail)
-        var btnShare: Button = itemView.findViewById(R.id.action_share)
+            var coupleBook: ImageView = itemView.findViewById(R.id.photo_book)
+            var fathiAnnaqi: TextView = itemView.findViewById(R.id.book_title)
+            var annisaSakinah: TextView = itemView.findViewById(R.id.book_detail)
+            var btnFavorite: Button = itemView.findViewById(R.id.action_favorite)
 
 
     }
-
 
 
 }
